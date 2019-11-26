@@ -18,6 +18,7 @@ var coords = [];
 var names = [];
 var report = [];
 var pics = [];
+docDatas = []
 var count = 0;
 
 
@@ -37,7 +38,7 @@ database.collection("reports").get()
                 'med': doc.data().medicalAttention,
                 'autho': doc.data().authorities
             })
-
+            docDatas.push(doc.data())
 
         })
         for (var i = 0; i < names.length; i++) {
@@ -132,15 +133,7 @@ function sendData(count) {
 
 
     //console.log(count)
-    database.collection('verified_reports').add({
-
-        name: names[count],
-        report: report[count],
-        lat: coords[count].lat,
-        lon: coords[count].long,
-        postalCode: coords[count].post
-
-    }).then(function (docRef) {
+    database.collection('verified_reports').add(docDatas[count]).then(function (docRef) {
         console.log("Document successfully written with id: ", docRef.id);
     })
         .catch(function (error) {
