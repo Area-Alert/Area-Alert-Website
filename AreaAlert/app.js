@@ -133,7 +133,8 @@ function sendData(count) {
 
 
     //console.log(count)
-    database.collection('verified_reports').add(docDatas[count]).then(function (docRef) {
+    docDatas[count]["verified"] = true
+    database.collection('reports').doc(String(Number(new Date()))).set(docDatas[count]).then(function (docRef) {
         console.log("Document successfully written with id: ", docRef.id);
     })
         .catch(function (error) {
